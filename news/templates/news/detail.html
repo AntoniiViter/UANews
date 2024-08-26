@@ -1,0 +1,30 @@
+{% extends 'news/base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+<div class="container" style="max-width: 900px;">
+<h1 style="word-break: break-word" class="text-left mt-5" id="newstitle">{{ detailnews.title }}</h1>
+
+<h5 class="text-left text-muted mb-5">{{ detailnews.created|date:'F jS Y' }}</h5>
+
+<div class="row_123"> <img src="{{ detailnews.image.url }}" class="img-fluid mb-2" style="object-fit: cover; max-height: 700px;" >
+    <p style="word-break: break-word" class="text123">{{ detailnews.info|safe }}</p>
+</div>
+
+
+<a href="{% url 'home' %}"><button type="button" class="btn btn-info">Back</button></a>
+
+    {% if detailnews.url %}
+<a href="{{ detailnews.url }}"><button type="button" class="btn btn-success">follow the link</button></a>
+    {% endif %}
+
+    {% include "news/viewcomments.html" %}
+    {% include "news/createcomment.html" %}
+
+{% endblock %}
+
+
+</div>

@@ -1,0 +1,60 @@
+{% extends "news/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+    <br>
+    <br>
+
+    {% else %}
+
+    <br>
+    <div class="row justify-content-center mt-5">
+    <div class="col-md-7 text-center">
+
+        <h1>Simply create your UANews!</h1>
+        <p>Life is fun. But life is also busy. There's a million different things you could tell. So we created <b><i>UANews</i></b></p>
+            <a role="button" class="btn btn-primary btn-lg" href="{% url 'signupuser' %}">Start</a>
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    {% endif %}
+
+<div class="row justify-content-center mb-3">
+  <div class="col-md-9 text-center">
+    <h1 class="font-weight-bold">Bringing You the News That Matters</h1>
+  </div>
+</div>
+
+<h2 class="mt-5">UANews</h2>
+<hr>
+
+
+<div class="row">
+  {% for allnews in page_obj %}
+  <div class="col-lg-4 col-md-6" style="margin-bottom: 20px">
+    {% if allnews.url %}
+    <a href="{{ allnews.url }}">
+      <img style="width: 400px; height: 250px; object-fit: cover;" src="{{ allnews.image.url }}" class="img-fluid mb-2">
+    </a>
+    {% else %}
+
+    <img style="width: 400px; height: 250px; object-fit: cover;" src="{{ allnews.image.url }}" class="img-fluid mb-2">
+    {% endif %}
+    <h3 style="word-break: break-word">{{ allnews.title }}  <label style="color:#979797; font-size: small;" > {{ allnews.newscreator }}</label> </h3>
+    <p style="word-break: break-word">{{ allnews.info|striptags|truncatechars:50 }}</p>
+    <a href="{% url 'detail' allnews.id %}"><button type="button" class="btn btn-info">See more</button></a>
+  </div>
+      <br>
+  {% endfor %}
+</div>
+
+    {% include "news/pagination.html" %}
+
+{% endblock %}
